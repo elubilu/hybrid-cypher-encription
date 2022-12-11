@@ -106,7 +106,3 @@ function polybiusDecrypt(key){
   console.log("********* End Hybrid Decryption **********")
   return decrpKey;
 }
-
-// ['zebracdf','ghiklmno','pqstuvwx''yjZEBRAC','DFGHIKLM','NOPQSTUV','WXYJ[\]^', '_`@{|}~z']
-// [['z','e','b', 'r','a','c','d','f'] ,['g','h','i','k', 'l', 'm','n', 'o'],['p','q','s','t','u','v','w','x'],['y','j','[','^',']','@', '{', '}'],['Z','E','B', 'R','A','C','D','F'] ,['G','H','I','K', 'L', 'M','N', 'O'],['P','Q','S','T','U','V','W','X'],['Y','J','|','_','~','`',"\",'z']]
-// 
