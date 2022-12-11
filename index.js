@@ -1,16 +1,5 @@
 
-$('#msg').bind('keyup blur',function(){ 
-    var node = $(this);
-    node.val(node.val().replace(/[^A-z]/g,'') ); }
-);
-$('#key').bind('keyup blur',function(){ 
-    var node = $(this);
-    node.val(node.val().replace(/[^A-z]/g,'') ); }
-);
-
-var polybiusDataset = [
-  []
-]
+var polybiusDatasetStr = ['zebracdf','ghiklmno','pqstuvwx','yjZEBRAC','DFGHIKLM','NOPQSTUV','WXYJ[\]^', '_`@{|}~z'];
 
 function myFunction() {
     var msg = document.getElementById("msg").value;
@@ -19,7 +8,7 @@ function myFunction() {
     if(mode == "Encryption"){
       var encrptData = vigenereEncrypt(key, msg);
       document.getElementById("result").innerHTML = encrptData;
-      console.log(encrptData);
+      // console.log(encrptData);
     }
     else if(mode == "Decryption"){
       var decrptData = vigenereDecrypt(key,msg);
@@ -40,10 +29,12 @@ function vigenereEncrypt(key, str) {
       // console.log(str[i],key[i],result,output[i])
   }
   output_str = output.join('');
-  return output_str;
+
+  return polybiusEncrypt(output_str);
 }
 
-function vigenereDecrypt(key, str) {
+function vigenereDecrypt(key, msg) {
+  var str = polybiusDecrypt(msg);
   var output = [str.length];
   var result = 0;
   var output_str;
@@ -66,10 +57,32 @@ function vigenereDecrypt(key, str) {
 }
 
 function polybiusEncrypt(key){
+  var encrpKey="";
   for (var i = 0; i < key.length; i++){
-    
+    for(let j=0; j<8; j++){
+      if(polybiusDatasetStr[j].indexOf(key[i])!= -1){
+        encrpKey += (j+1);
+        encrpKey += polybiusDatasetStr[j].indexOf(key[i])+1
+        break;
+      }
+    }
   }
+  console.log("********* Hybrid Encryption **********")
+  console.log(encrpKey);
+  console.log("********* Hybrid Encryption **********")
+  return encrpKey;
+}
+function polybiusDecrypt(key){
+  var decrpKey="";
+  for (var i = 0; i < key.length; i+=2){
+    decrpKey+=polybiusDatasetStr[key[i]-1][key[i+1]-1];
+  }
+  console.log("********* Hybrid Decryption **********")
+  console.log(decrpKey);
+  console.log("********* Hybrid Decryption **********")
+  return decrpKey;
 }
 
-// zebracdfghiklmnopqstuvwxyZEBRACDFGHIKLMNOPQSTUVWXY[\]^_`
+// ['zebracdf','ghiklmno','pqstuvwx''yjZEBRAC','DFGHIKLM','NOPQSTUV','WXYJ[\]^', '_`@{|}~z']
+// [['z','e','b', 'r','a','c','d','f'] ,['g','h','i','k', 'l', 'm','n', 'o'],['p','q','s','t','u','v','w','x'],['y','j','[','^',']','@', '{', '}'],['Z','E','B', 'R','A','C','D','F'] ,['G','H','I','K', 'L', 'M','N', 'O'],['P','Q','S','T','U','V','W','X'],['Y','J','|','_','~','`',"\",'z']]
 // 
